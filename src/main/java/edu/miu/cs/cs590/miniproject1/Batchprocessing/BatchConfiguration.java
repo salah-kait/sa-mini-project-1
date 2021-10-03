@@ -39,9 +39,9 @@ public class BatchConfiguration {
     public FlatFileItemReader<Student> reader() {
         return new FlatFileItemReaderBuilder<Student>()
                 .name("StudentItemReader")
-                .resource(new ClassPathResource("students.csv"))
+                .resource(new ClassPathResource("sample-data.csv"))
                 .delimited()
-                .names(new String[]{"firstName", "lastName", "gpa", "age"})
+                .names(new String[]{"firstName", "lastName", "GPA", "age"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Student>() {{
                     setTargetType(Student.class);
                 }})
@@ -57,7 +57,7 @@ public class BatchConfiguration {
     public JdbcBatchItemWriter<TransformedStudent> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<TransformedStudent>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO student (first_name, last_name, gpa, age) VALUES (:firstName, :lastName, :gpa, :age)")
+                .sql("INSERT INTO student (first_name, last_name, gpa, DOB) VALUES (:firstName, :lastName, :gpa, :DOB)")
                 .dataSource(dataSource)
                 .build();
     }
