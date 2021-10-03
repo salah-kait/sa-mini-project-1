@@ -7,5 +7,5 @@ RUN mvn package  -Dmaven.test.skip
 FROM openjdk:8-jdk-alpine
 
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} miniproject1-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","/miniproject1-0.0.1-SNAPSHOT.jar"]
+COPY --from=MAVEN_TOOL_CHAIN /tmp/target/*.jar salah.jar
+ENTRYPOINT ["java","-jar","/salah.jar"]
